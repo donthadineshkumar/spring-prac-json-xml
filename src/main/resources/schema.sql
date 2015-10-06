@@ -1,0 +1,1 @@
+create table Album(id bigint, name varchar(30))

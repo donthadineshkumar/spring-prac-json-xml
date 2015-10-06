@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+
+<!--
+	This xml configuration is equivalent to @Configuration @EnableWebMvc
+ 	<mvc:annotation-driven />
+	
+	This is equivalent to Overriding addResourceHandlers of 
+	WebMvcConfigurerAdapter
+	
+	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources> -->
+	
+	<!-- Can pass more than one package using comma space semicolon  -->
+	
+	<context:component-scan base-package="com.music.controllers com.music.config" />
+	
+	<oxm:jaxb2-marshaller id="jaxb2Marshaller" >
+		<oxm:class-to-be-bound name="com.music.model.Album"/>
+	</oxm:jaxb2-marshaller> 
+	
+	<bean id="contentManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="true" />
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="defaultContentType" value="application/xml" />
+		<!-- Whether to use Java Activation Framework -->
+		<property name="useJaf" value="false" />
+		<property name="mediaTypes">
+			<map>
+				<entry  key="html" value="text/html" />
+				<entry  key="json" value="application/json" />
+				<entry  key="xml" value="application/xml" />
+			</map>
+		</property>
+	
+	</bean>
+	
+
+
+</beans>
